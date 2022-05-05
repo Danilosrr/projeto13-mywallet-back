@@ -8,7 +8,7 @@ const mongoClient = new MongoClient(process.env.MONGO_URI);
 try {
     await mongoClient.connect(() => {
     db = mongoClient.db("mywallet-API");
-    console.log("sucessfully connected to mongodb")
+    console.log("sucessfully connected to mongodb",db)
     });    
 } catch (error) {
     console.log("error during connection to mongodb", error)
