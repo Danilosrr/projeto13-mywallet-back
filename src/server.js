@@ -13,4 +13,6 @@ dotenv.config();
 app.use(registerRouter);
 app.use(balanceRouter);
 
-app.listen(5000,()=>console.log("server connected on port 5000"));
+app.listen(process.env.PORT,()=> {
+    console.log("server connected on port " + process.env.PORT);
+});
