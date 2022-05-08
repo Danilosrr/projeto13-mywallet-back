@@ -13,8 +13,13 @@ export async function register (req, res) {
     });
 
     const validation = registerSchema.validate(user, { abortEarly: false });
+    const alreadyUser = await db.collection("users").find({ email: user.email }).toArray();
+    console.log(alreadyUser)
 
-    if (validation.error || user.password != user.passwordConfirm) {
+    if (alreadyUser.length>=1) {
+        console.log("Email already registered");
+        res.sendStatus(401);
+    }else if (validation.error || user.password != user.passwordConfirm) {
         console.log(validation.error);
         res.sendStatus(422);
     }else{
@@ -51,7 +56,7 @@ export async function login (req, res) {
     } else if (hasUser && bcrypt.compareSync(user.password, hasUser.password)) {
         const token = uuid();
         await db.collection('sessions').insertOne({ token, userId: hasUser._id });
-        res.send(token);
+        res.send({ token: token });
     } else {
         res.sendStatus(401);
     }
