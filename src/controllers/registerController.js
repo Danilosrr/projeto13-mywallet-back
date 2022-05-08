@@ -14,7 +14,6 @@ export async function register (req, res) {
 
     const validation = registerSchema.validate(user, { abortEarly: false });
     const alreadyUser = await db.collection("users").find({ email: user.email }).toArray();
-    console.log(alreadyUser)
 
     if (alreadyUser.length>=1) {
         console.log("Email already registered");

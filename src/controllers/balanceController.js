@@ -17,14 +17,15 @@ export async function balance (req, res) {
 
 export async function newDebtCredit (req, res) {
     const { user } = res.locals;
-    const { value, type } = req.body;
+    const { description, value, type } = req.body;
     
     const newTransaction = {
         userId: user._id,
+        description,
         type,
         value
     };
-
+    
     try {
         const userBalance = await db.collection("transactions").insertOne( newTransaction );
         res.sendStatus(200);
