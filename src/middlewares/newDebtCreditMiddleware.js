@@ -1,7 +1,8 @@
 import debtCreditSchema from "./../schemas/debtCreditSchema.js";
 
-export default function validateNewDebtCredit(req, res, next) {
-    const validation = debtCreditSchema.validate(req.body, { abortEarly: false });
+export function validateNewDebtCredit(req, res, next) {
+    const newOperation = req.body
+    const validation = debtCreditSchema.validate(newOperation, { abortEarly: false });
     
     if (validation.error) {
         console.log("error during entry validation")
